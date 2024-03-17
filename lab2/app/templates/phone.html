@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Проверка номера телефона</h1>
+    <form class="form" method="post">
+            <input type="text" class="form-control{% if error %} is-invalid{% endif %}" id="num" name="num" value="{{request.form.num}}">
+            {% if error %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endif %}
+        <button class="btn btn-primary mb-2" type="submit">Проверить</button>
+        <input class="form-control" type="text" disabled value="{{result}}">
+    </form>
+{% endblock%}

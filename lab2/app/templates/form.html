@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Форма</h1>
+    <form class = "form" method="post">
+        <label for = "login">
+            Логин
+        </label>
+        <input type = "text" id = "login" name = "login" placeholder="Логин" value="{{request.form.login}}">
+
+        <label for = "password">
+            Пароль
+        </label>
+        <input type = "password" id = "password" name = "password" placeholder="Пароль" value="{{request.form.password}}">
+        <button type = "submit">Отправить</button>
+    </form>
+
+    <table class="table">
+        <tbody>
+            {% for key, value in request.form.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock%}
