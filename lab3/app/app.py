@@ -52,7 +52,7 @@ def auth():
 
         for user in get_users():
             if user["login"] == login and user["password"] == password:
-                flash("Logged in successfully", "success")
+                flash("Вы успешно авторизовались", "success")
                 login_user(User(login, user["user_id"]), remember_me)
                 url_to_redirect = request.args.get('next', url_for('index'))
                 return redirect(url_to_redirect)
