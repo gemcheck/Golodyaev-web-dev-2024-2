@@ -285,11 +285,11 @@ def change_password(cursor):
         new_password = request.form['new_password']
         confirm_password = request.form['confirm_password']
         if confirm_password != new_password:
-            errors['confirm_password'] = ['Пароли должны совпадать']
+            errors['confirm_password'] = "Пароли должны совпадать"
 
         cursor.execute("SELECT id FROM users WHERE id = %s AND password_hash = SHA2(%s, 256)", (user_id, old_password))
         if not cursor.fetchone():
-            errors['old_password'] = ['Введён неверный пароль']
+            errors['old_password'] = "Введён неверный пароль"
 
         errors['new_password'] = validate_password(new_password)
 
