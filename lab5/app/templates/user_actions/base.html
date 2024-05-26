@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{ url_for('user_actions.index') }}">Журнал действий пользователя</a>
+    </li>
+    {% if current_user.is_admin() %}
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{ url_for('user_actions.pages_stats') }}">Статистика посещений по страницам</a>
+    </li>
+    {% endif %}
+    {% if current_user.is_admin() %}
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{ url_for('user_actions.users_stats') }}">Статистика посещений по пользователям</a>
+    </li>
+    {% endif %}
+</ul>
+{% block user_actions_content %}
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'user_actions/base.html' %}
+
+{% from 'user_actions/pagination.html' import pagination %}
+
+{% block user_actions_content %}
+<h1> Статистика посещений по страницам </h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th> № </th>
+            <th> Страница </th>
+            <th> Количество посещений </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for page_stat in pages_stats %}
+        <tr>
+            <td> {{ loop.index }} </td>
+            <td> {{ page_stat.path }} </td>
+            <td> {{ page_stat.visits_count }} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="mb-3">
+    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+     href="{{ url_for('user_actions.page_export') }}">Скачать отчёт по страницам</a>
+</div>
+
+{{ pagination(request.endpoint, page, page_count, pages) }}
+
+{% endblock %}
