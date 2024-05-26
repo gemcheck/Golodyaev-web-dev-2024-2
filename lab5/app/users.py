@@ -6,12 +6,14 @@ import mysql.connector as connector
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
+
 def get_roles():
     result = []
     with db_connector.connect().cursor(named_tuple=True) as cursor:
         cursor.execute("SELECT * FROM roles")
         result = cursor.fetchall()
     return result
+
 
 @bp.route('/')
 def index():
@@ -21,7 +23,8 @@ def index():
         users = cursor.fetchall()
     return render_template('users/index.html', users=users)
 
-@bp.route('/<int:user_id>/delete', methods = ['POST'])
+
+@bp.route('/<int:user_id>/delete', methods=['POST'])
 @login_required
 @check_for_privelege('delete')
 def delete(user_id):
@@ -33,7 +36,8 @@ def delete(user_id):
     flash('Учетная запись успешно удалена', 'success')
     return redirect(url_for('users.index'))
 
-@bp.route('/new', methods = ['POST', 'GET'])
+
+@bp.route('/new', methods=['POST', 'GET'])
 @login_required
 @check_for_privelege('create')
 def new():
@@ -58,6 +62,7 @@ def new():
             connection.rollback()
     return render_template('users/new.html', user_data=user_data, roles=get_roles())
 
+
 @bp.route('/<int:user_id>/view')
 @check_for_privelege('read')
 def view(user_id):
@@ -74,7 +79,8 @@ def view(user_id):
         user_role = cursor.fetchone()
         return render_template('users/view.html', user_data=user_data, user_role=user_role.name)
 
-@bp.route('/<int:user_id>/edit', methods = ['POST', 'GET'])
+
+@bp.route('/<int:user_id>/edit', methods=['POST', 'GET'])
 @login_required
 @check_for_privelege('update')
 def edit(user_id):
@@ -98,7 +104,7 @@ def edit(user_id):
             with connection.cursor(named_tuple=True) as cursor:
                 field_assignments = ', '.join([f"{field} = %({field})s" for field in fields])
                 query = (f"UPDATE users SET {field_assignments} "
-                        "WHERE id = %(id)s")
+                         "WHERE id = %(id)s")
                 print(query)
                 cursor.execute(query, user_data)
                 connection.commit()
@@ -107,5 +113,5 @@ def edit(user_id):
         except connector.errors.DatabaseError as error:
             flash(f'Произошла ошибка при изменении записи: {error}', 'danger')
             connection.rollback()
-        
+
     return render_template('users/edit.html', user_data=user_data, roles=get_roles())

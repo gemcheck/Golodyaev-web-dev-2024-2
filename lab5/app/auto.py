@@ -69,9 +69,6 @@ def auth():
             print(login)
             cursor.execute("SELECT id, login, role_id FROM users WHERE login = %s AND password_hash = SHA2(%s, 256)",
                            (login, password))
-            # sql = f"SELECT id, login FROM users WHERE login = '{login}' AND password_hash = SHA2('{password}', 256);"
-            # print(sql)
-            # cursor.execute(sql)
             print(cursor.statement)
             user = cursor.fetchone()
 

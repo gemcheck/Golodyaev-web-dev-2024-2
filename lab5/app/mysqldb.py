@@ -1,6 +1,7 @@
 from flask import current_app, g
 import mysql.connector
 
+
 class DBConnector:
     def __init__(self, app):
         self.app = app
@@ -18,9 +19,8 @@ class DBConnector:
         if 'db' not in g:
             g.db = mysql.connector.connect(**self.get_config())
         return g.db
-    
+
     def disconnect(self, e=None):
         if 'db' in g:
             g.db.close()
         g.pop('db', None)
-        
